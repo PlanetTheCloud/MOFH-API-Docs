@@ -288,7 +288,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -298,6 +298,7 @@
     <div class="toc-wrapper">
       <img src="images/logo-c60ba7f6.png" class="logo" alt="" />
         <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="python">python</a>
         </div>
         <div class="search">
@@ -357,7 +358,7 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the unofficial MyOwnFreeHost (MOFH) API Docs! You can use our API to learn how the MOFH API works.</p>
 
-<p>There are examples in Python, but if you know any other coding language and are willing to contribute please consider making a pull request on the <a href="https://github.com/Wallvon/MOFH-API-Docs">GitHub repository</a>. You can view code examples in the dark area to the right, and you can switch the coding language of the examples with the tabs in the top right.</p>
+<p>There are examples in cURL and Python, but if you know any other coding language and are willing to contribute please consider making a pull request on the <a href="https://github.com/Wallvon/MOFH-API-Docs">GitHub repository</a>. You can view code examples in the dark area to the right, and you can switch the coding language of the examples with the tabs in the top right.</p>
 
 <p>Other MOFH API wrappers:   </p>
 
@@ -370,14 +371,15 @@
 
 <ul>
 <li>You can create up to 3 accounts per email with the MOFH API.</li>
-<li>The MOFH API is very limited, so you can&#39;t really do more than what is listed here.</li>
-<li>The MOFH API is not user-friendly, and I really wouldn&#39;t recommend using it.</li>
+<li>The MOFH API is pretty limited, so you can&#39;t really do more than what is listed here.</li>
+<li>The SSL certificate on <code>https://panel.myownfreehost.net:2087/xml-api/</code> tends to expire, so you may need to turn off SSL verification.</li>
 </ul>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/"</span> <span class="c1"># This is the base URL
 </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
@@ -395,14 +397,15 @@
 <aside class="notice">
 You must replace <code>username</code> and <code>password</code> with your API credentials.
 </aside>
-<h1 id='api-accounts'>API - Accounts</h1><h2 id='create-account'>Create account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h1 id='api-accounts'>API - Accounts</h1><h2 id='create-account'>Create account</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"username=example&amp;password=password&amp;contactemail=example@example.com&amp;domain=subdomain.example.com&amp;plan=MyAwesomePlan"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/createacct.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 <span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the username.
 </span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/createacct.php"</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="s">'example'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'contactemail'</span><span class="p">:</span> <span class="s">'example@example.com'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">,</span> <span class="s">'plan'</span><span class="p">:</span> <span class="s">'MyAwesomePlan'</span><span class="p">}</span> <span class="c1"># If you want to use a domain which is not a subdomain, put that domain in.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -444,14 +447,15 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint creates a new user account with the provided information.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/createacct.php</code></p>
-<h2 id='suspend-account'>Suspend account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h2 id='suspend-account'>Suspend account</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"user=example&amp;reason=My beautiful reason."</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/suspendacct.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 <span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
 </span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/suspendacct.php"</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'reason'</span><span class="p">:</span> <span class="s">'My beautiful reason.'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -482,14 +486,15 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint suspends a user account with the provided information.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/suspendacct.php</code></p>
-<h2 id='unsuspend-account'>Unsuspend account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h2 id='unsuspend-account'>Unsuspend account</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"user=username"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/unsuspendacct.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 <span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
 </span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/unsuspendacct.php"</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -514,14 +519,15 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint unsuspends a user account with the provided information.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/unsuspendacct.php</code></p>
-<h2 id='change-password'>Change password</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h2 id='change-password'>Change password</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"user=username&amp;pass=password"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/passwd.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 <span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
 </span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/passwd.php"</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'pass'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -562,13 +568,14 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint changes the password of a user account with the provided information.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/passwd.php</code></p>
-<h1 id='api-domains'>API - Domains</h1><h2 id='check-if-a-domain-is-available'>Check if a domain is available</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h1 id='api-domains'>API - Domains</h1><h2 id='check-if-a-domain-is-available'>Check if a domain is available</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"api_user=username&amp;api_key=password&amp;domain=subdomain.example.com"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/checkavailable.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/checkavailable.php"</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span> <span class="c1"># If you want to use a domain which is not a subdomain, put that domain in.
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span> <span class="c1"># If you want to use a domain which is not a subdomain, put that domain in.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span> <span class="c1"># Returns the status code, either 0 or 1.
 </span>
@@ -581,13 +588,14 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint checks if the requested domain name is available.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/checkavailable.php</code></p>
-<h2 id='get-a-user-39-s-domains'>Get a user&#39;s domains</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h2 id='get-a-user-39-s-domains'>Get a user&#39;s domains</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"api_user=username&amp;api_key=password&amp;username=hname_12345678"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/getuserdomains.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/getuserdomains.php"</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'username'</span><span class="p">:</span> <span class="s">'hname_12345678'</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'username'</span><span class="p">:</span> <span class="s">'hname_12345678'</span><span class="p">}</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -600,13 +608,14 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <p>This endpoint gets the domains connected to a user&#39;s account.</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/getuserdomains.php</code></p>
-<h2 id='get-a-user-by-a-domain'>Get a user by a domain</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<h2 id='get-a-user-by-a-domain'>Get a user by a domain</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="nt">-u</span> username:password <span class="nt">-d</span> <span class="s2">"api_user=username&amp;api_key=password&amp;domain=subdomain.example.com"</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/getdomainuser.php"</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/getdomainuser.php"</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'username'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">))</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -620,13 +629,14 @@ You must replace <code>username</code> and <code>password</code> with your API c
 <h3 id='http-request-7'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/getdomainuser.php</code></p>
 <h1 id='errors'>Errors</h1>
-<p>The MOFH API doesn&#39;t use any error codes and will always return a 200 HTTP code. <em>sigh</em></p>
+<p>The MOFH API doesn&#39;t use any error codes, and will always return a 200 HTTP code.</p>
 
 <p>You would have to get the text inside the <code>&lt;status&gt;&lt;/status&gt;</code> tags to get the status of your request (either <code>0</code> or <code>1</code>). Or if you try to use the <code>getuserdomains.php</code> and <code>getdomainuser.php</code> endpoints you will see that it just returns <code>null</code> instead of the list/array it usually gives.</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="python">python</a>
           </div>
       </div>
