@@ -279,8 +279,8 @@
   color: #859900;
 }
     </style>
-    <link href="stylesheets/screen-3e9e8ad5.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print-ba05aef7.css" rel="stylesheet" media="print" />
+    <link href="stylesheets/screen-4a2b6029.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
       <script src="javascripts/all-e9bde216.js"></script>
 
     <script>
@@ -288,7 +288,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -298,7 +298,6 @@
     <div class="toc-wrapper">
       <img src="images/logo-c60ba7f6.png" class="logo" alt="" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="python">python</a>
         </div>
         <div class="search">
@@ -316,7 +315,30 @@
             <a href="#api-accounts" class="toc-h1 toc-link" data-title="API - Accounts">API - Accounts</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#create-account" class="toc-h2 toc-link" data-title="Create Account">Create Account</a>
+                    <a href="#create-account" class="toc-h2 toc-link" data-title="Create account">Create account</a>
+                  </li>
+                  <li>
+                    <a href="#suspend-account" class="toc-h2 toc-link" data-title="Suspend account">Suspend account</a>
+                  </li>
+                  <li>
+                    <a href="#unsuspend-account" class="toc-h2 toc-link" data-title="Unsuspend account">Unsuspend account</a>
+                  </li>
+                  <li>
+                    <a href="#change-password" class="toc-h2 toc-link" data-title="Change password">Change password</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#api-domains" class="toc-h1 toc-link" data-title="API - Domains">API - Domains</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#check-if-a-domain-is-available" class="toc-h2 toc-link" data-title="Check if a domain is available">Check if a domain is available</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-user-39-s-domains" class="toc-h2 toc-link" data-title="Get a user's domains">Get a user's domains</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-user-by-a-domain" class="toc-h2 toc-link" data-title="Get a user by a domain">Get a user by a domain</a>
                   </li>
               </ul>
           </li>
@@ -325,28 +347,31 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='https://github.com/Wallvon/MOFH-API-Docs'>GitHub Repository</a></li>
-            <li><a href='https://that-guy.tech'>Made by Robert S.</a></li>
+            <li><a href='https://github.com/Wallvon/MOFH-API-Docs' target="_blank">GitHub Repository</a></li>
+            <li><a href='https://robert-s.dev' target="_blank">Made with ❤️ by Robert S.</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the unofficial MyOwnFreeHost API Docs! You can use our API to learn how the MOFH API works.</p>
+<p>Welcome to the unofficial MyOwnFreeHost (MOFH) API Docs! You can use our API to learn how the MOFH API works.</p>
 
-<p>There are examples in Python and cURL, but if you know any other coding language please make a pull request on the <a href="https://github.com/Wallvon/MOFH-API-Docs">GitHub page</a>. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>There are examples in Python, but if you know any other coding language and are willing to contribute please consider making a pull request on the <a href="https://github.com/Wallvon/MOFH-API-Docs">GitHub repository</a>. You can view code examples in the dark area to the right, and you can switch the coding language of the examples with the tabs in the top right.</p>
 
 <p>Other MOFH API wrappers:   </p>
 
 <ul>
-<li><a href="https://github.com/InfinityFreeHosting/mofh-client">mofh-client</a> (PHP)</li>
+<li><p><a href="https://github.com/InfinityFreeHosting/mofh-client">mofh-client</a> (PHP)</p></li>
+<li><p><a href="#">mofh.py</a> (Python) (Coming Soon)</p></li>
 </ul>
 
-<p>Coming soon:   </p>
+<p>Some other side-notes:</p>
 
 <ul>
-<li><a href="#">mofh.py</a> (Python)</li>
+<li>You can create up to 3 accounts per email with the MOFH API.</li>
+<li>The MOFH API is very limited, so you can&#39;t really do more than what is listed here.</li>
+<li>The MOFH API is not user-friendly, and I really wouldn&#39;t recommend using it.</li>
 </ul>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
@@ -357,101 +382,251 @@
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/"</span> <span class="c1"># This is the base URL
 </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'API USERNAME'</span> <span class="s">'API PASSWORD'</span><span class="p">),</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--insecure</span> <span class="s2">"https://panel.myownfreehost.net:2087/xml-api/"</span> <span class="nt">--user</span> username:password
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'username'</span> <span class="s">'password'</span><span class="p">),</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
-<p>Make sure to replace <code>username:password</code> or <code>API USERNAME</code> and <code>API PASSWORD</code> with your API credentials.</p>
+<p>Make sure to replace &#39;username&#39; and &#39;password&#39; with your API credentials.</p>
 </blockquote>
 
 <p>MOFH uses API credentials to allow access to the API, you can get them <a href="https://panel.myownfreehost.net/panel/index2.php?option=api">here</a>.</p>
 
-<p>MOFH expects for the API credentials to be included in all API requests to the server.</p>
+<p>MOFH expects the API credentials to be included in all API requests to the server.</p>
 
 <aside class="notice">
-You must replace <code>username:password</code> or <code>API USERNAME</code> and <code>API PASSWORD</code> with your API credentials.
+You must replace <code>username</code> and <code>password</code> with your API credentials.
 </aside>
-<h1 id='api-accounts'>API - Accounts</h1><h2 id='create-account'>Create Account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">import</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">ElementTree</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/createacct.php"</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="s">'example'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'contactemail'</span><span class="p">:</span> <span class="s">'example@example.co'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">,</span> <span class="s">'plan'</span><span class="p">:</span> <span class="s">'MyAwesomePlan'</span><span class="p">}</span>
-<span class="c1"># if you want to use a domain which is not a subdomain, put that domain in.
+<h1 id='api-accounts'>API - Accounts</h1><h2 id='create-account'>Create account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+<span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the username.
 </span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="s">'API USERNAME'</span> <span class="s">'API PASSWORD'</span><span class="p">),</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-<span class="n">tree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="p">(</span><span class="n">fromstring</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
-<span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">getroot</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
-  <span class="k">print</span><span class="p">(</span><span class="n">child</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span><span class="p">)</span> <span class="c1"># The vPanel and FTP username
-</span></code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>COMING SOON
-</code></pre></div>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/createacct.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="s">'example'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">,</span> <span class="s">'contactemail'</span><span class="p">:</span> <span class="s">'example@example.com'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">,</span> <span class="s">'plan'</span><span class="p">:</span> <span class="s">'MyAwesomePlan'</span><span class="p">}</span> <span class="c1"># If you want to use a domain which is not a subdomain, put that domain in.
+</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># tree = ElementTree(fromstring(response.content)) - Do this if you want to only get the username.
+# root = tree.getroot() - Do this if you want to only get the username.
+# for child in root: - Do this if you want to only get the username.
+#  print(child[0][1].text) # The vPanel and FTP username - Do this if you want to only get the username.
+</span></code></pre></div>
 <blockquote>
 <p>The above command returns XML structured like this:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight xml tab-xml"><code>COMING SOON
+<div class="highlight"><pre class="highlight xml tab-xml"><code><span class="nt">&lt;createacct&gt;</span>
+     <span class="nt">&lt;result&gt;</span>        
+          <span class="nt">&lt;options&gt;</span>
+                  <span class="nt">&lt;ip&gt;</span>n<span class="nt">&lt;/ip&gt;</span>
+                  <span class="nt">&lt;vpusername&gt;</span>hname_12345678<span class="nt">&lt;/vpusername&gt;</span>
+                  <span class="nt">&lt;nameserver&gt;</span>ns1.byet.org<span class="nt">&lt;/nameserver&gt;</span>
+                  <span class="nt">&lt;nameserver2&gt;</span>ns2.byet.org<span class="nt">&lt;/nameserver2&gt;</span>
+                  <span class="nt">&lt;nameserver3/&gt;</span>
+                  <span class="nt">&lt;nameserver4/&gt;</span>
+                  <span class="nt">&lt;nameservera/&gt;</span>
+                  <span class="nt">&lt;nameservera2/&gt;</span>
+                  <span class="nt">&lt;nameservera3/&gt;</span>
+                  <span class="nt">&lt;nameservera4/&gt;</span>
+                  <span class="nt">&lt;nameserverentry/&gt;</span>
+                  <span class="nt">&lt;nameserverentry2/&gt;</span>
+                  <span class="nt">&lt;nameserverentry3/&gt;</span>
+                  <span class="nt">&lt;nameserverentry4/&gt;</span>
+                  <span class="nt">&lt;package&gt;&lt;/package&gt;</span>
+           <span class="nt">&lt;/options&gt;</span>
+           <span class="nt">&lt;rawout&gt;</span>
+           account added to queue to be added 
+            <span class="nt">&lt;/rawout&gt;</span>
+            <span class="nt">&lt;status&gt;</span>1<span class="nt">&lt;/status&gt;</span>
+            <span class="nt">&lt;statusmsg&gt;</span>This account has been successfuly created<span class="nt">&lt;/statusmsg&gt;</span>
+     <span class="nt">&lt;/result&gt;</span>
+<span class="nt">&lt;/createacct&gt;</span>
 </code></pre></div>
 <p>This endpoint creates a new user account with the provided information.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://panel.myownfreehost.net:2087/xml-api/createacct.php</code></p>
-<h1 id='errors'>Errors</h1>
-<p>The MOFH API uses the following error codes:</p>
+<h2 id='suspend-account'>Suspend account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+<span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
+</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/suspendacct.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'reason'</span><span class="p">:</span> <span class="s">'My beautiful reason.'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
+</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
 
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
-</tr>
-</tbody></table>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># tree = ElementTree(fromstring(response.content)) - Do this if you want to only get the status code.
+# root = tree.getroot() - Do this if you want to only get the status code.
+# for child in root: - Do this if you want to only get the status code.
+#  print(child[0].text) # The status code (can either be 0 or 1) - Do this if you want to only get the status code.
+</span></code></pre></div>
+<blockquote>
+<p>The above command returns XML structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight xml tab-xml"><code><span class="nt">&lt;suspendacct&gt;</span>
+    <span class="nt">&lt;result&gt;</span>
+        <span class="nt">&lt;status&gt;</span>1<span class="nt">&lt;/status&gt;</span>
+        <span class="nt">&lt;statusmsg&gt;</span>
+            <span class="nt">&lt;script&gt;</span>if (self['clear_ui_status']) { clear_ui_status(); }<span class="nt">&lt;/script&gt;</span>
+            Changing Shell to /bin/false...Changing shell for username.
+            Shell changed.
+            Locking Password...Locking password for user username.
+            marking user vhosts / databases for suspension.
+            ..
+            ..
+            Completed, this account will be fully suspended in 2 minutes.
+        <span class="nt">&lt;/statusmsg&gt;</span>
+    <span class="nt">&lt;/result&gt;</span>
+<span class="nt">&lt;/suspendacct&gt;</span>
+</code></pre></div>
+<p>This endpoint suspends a user account with the provided information.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/suspendacct.php</code></p>
+<h2 id='unsuspend-account'>Unsuspend account</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+<span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
+</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/unsuspendacct.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
+</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># tree = ElementTree(fromstring(response.content)) - Do this if you want to only get the status code.
+# root = tree.getroot() - Do this if you want to only get the status code.
+# for child in root: - Do this if you want to only get the status code.
+#  print(child[0].text) # The status code (can either be 0 or 1) - Do this if you want to only get the status code.
+</span></code></pre></div>
+<blockquote>
+<p>The above command returns XML structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight xml tab-xml"><code><span class="nt">&lt;unsuspendacct&gt;</span>
+    <span class="nt">&lt;result&gt;</span>
+        <span class="nt">&lt;status&gt;</span>1<span class="nt">&lt;/status&gt;</span>
+        <span class="nt">&lt;statusmsg&gt;</span>
+            <span class="nt">&lt;script&gt;</span>if (self['clear_ui_status']) { clear_ui_status(); }<span class="nt">&lt;/script&gt;</span>
+            username account has been unsuspended
+        <span class="nt">&lt;/statusmsg&gt;</span>
+    <span class="nt">&lt;/result&gt;</span>
+<span class="nt">&lt;/unsuspendacct&gt;</span>
+</code></pre></div>
+<p>This endpoint unsuspends a user account with the provided information.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/unsuspendacct.php</code></p>
+<h2 id='change-password'>Change password</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+<span class="c1"># from xml.etree.ElementTree import fromstring, ElementTree - Do this if you want to only get the status code.
+</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/passwd.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'user'</span><span class="p">:</span> <span class="s">'username'</span><span class="p">,</span> <span class="s">'pass'</span><span class="p">:</span> <span class="s">'password'</span><span class="p">}</span> <span class="c1"># For the username, use the same username you set when creating the account.
+</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># tree = ElementTree(fromstring(response.content)) - Do this if you want to only get the status code.
+# root = tree.getroot() - Do this if you want to only get the status code.
+# for child in root: - Do this if you want to only get the status code.
+#  print(child[5].text) # The status code (can either be 0 or 1) - Do this if you want to only get the status code.
+</span></code></pre></div>
+<blockquote>
+<p>The above command returns XML structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight xml tab-xml"><code><span class="nt">&lt;passwd&gt;</span>
+        <span class="nt">&lt;passwd&gt;</span>
+                <span class="nt">&lt;rawout&gt;</span>        
+                 Changing password for username
+                 Password for username has been changed 
+                 Updating ftp passwords for username
+                 Ftp password files updated. 
+                 Ftp vhost passwords synced
+                <span class="nt">&lt;/rawout&gt;</span>
+                 <span class="nt">&lt;services&gt;</span>
+                      <span class="nt">&lt;app&gt;</span>system<span class="nt">&lt;/app&gt;</span>
+                 <span class="nt">&lt;/services&gt;</span>
+                 <span class="nt">&lt;services&gt;</span>
+                      <span class="nt">&lt;app&gt;</span>ftp<span class="nt">&lt;/app&gt;</span>
+                 <span class="nt">&lt;/services&gt;</span>
+                 <span class="nt">&lt;services&gt;</span>
+                      <span class="nt">&lt;app&gt;</span>mail<span class="nt">&lt;/app&gt;</span>
+                 <span class="nt">&lt;/services&gt;</span>
+                 <span class="nt">&lt;services&gt;</span>
+                       <span class="nt">&lt;app&gt;</span>mySQL<span class="nt">&lt;/app&gt;</span>
+                 <span class="nt">&lt;/services&gt;</span>
+                <span class="nt">&lt;status&gt;</span>1<span class="nt">&lt;/status&gt;</span>
+                <span class="nt">&lt;statusmsg&gt;</span>Password changed for user username<span class="nt">&lt;/statusmsg&gt;</span>
+        <span class="nt">&lt;/passwd&gt;</span>
+<span class="nt">&lt;/passwd&gt;</span>
+</code></pre></div>
+<p>This endpoint changes the password of a user account with the provided information.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/passwd.php</code></p>
+<h1 id='api-domains'>API - Domains</h1><h2 id='check-if-a-domain-is-available'>Check if a domain is available</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/checkavailable.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span> <span class="c1"># If you want to use a domain which is not a subdomain, put that domain in.
+</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span> <span class="c1"># Returns the status code, either 0 or 1.
+</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns XML structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight xml tab-xml"><code>1
+</code></pre></div>
+<p>This endpoint checks if the requested domain name is available.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/checkavailable.php</code></p>
+<h2 id='get-a-user-39-s-domains'>Get a user&#39;s domains</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/getuserdomains.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'username'</span><span class="p">:</span> <span class="s">'hname_12345678'</span><span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre></div>
+<blockquote>
+<p>The above command returns a list/array structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="p">[[</span><span class="s">"ACTIVE"</span><span class="p">,</span><span class="s">"subdomain.example.com"</span><span class="p">]]</span>
+</code></pre></div>
+<p>This endpoint gets the domains connected to a user&#39;s account.</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/getuserdomains.php</code></p>
+<h2 id='get-a-user-by-a-domain'>Get a user by a domain</h2><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">HTTPBasicAuth</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://panel.myownfreehost.net:2087/xml-api/getdomainuser.php"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'api_user'</span><span class="p">:</span> <span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'api_key'</span><span class="p">:</span> <span class="s">'API PASSWORD'</span><span class="p">,</span> <span class="s">'domain'</span><span class="p">:</span> <span class="s">'subdomain.example.com'</span><span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">HTTPBasicAuth</span><span class="p">(</span><span class="s">'API USERNAME'</span><span class="p">,</span> <span class="s">'API PASSWORD'</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre></div>
+<blockquote>
+<p>The above command returns a list/array structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="p">[</span><span class="s">"ACTIVE"</span><span class="p">,</span><span class="s">"subdomain.example.com"</span><span class="p">,</span><span class="s">"\/home\/vol15_2\/example.com\/hname_12345678\/htdocs"</span><span class="p">,</span><span class="s">"hname_12345678"</span><span class="p">]</span>
+</code></pre></div>
+<p>This endpoint gets a user which has the requested domain connected to their account.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>POST https://panel.myownfreehost.net:2087/xml-api/getdomainuser.php</code></p>
+<h1 id='errors'>Errors</h1>
+<p>The MOFH API doesn&#39;t use any error codes and will always return a 200 HTTP code. <em>sigh</em></p>
+
+<p>You would have to get the text inside the <code>&lt;status&gt;&lt;/status&gt;</code> tags to get the status of your request (either <code>0</code> or <code>1</code>). Or if you try to use the <code>getuserdomains.php</code> and <code>getdomainuser.php</code> endpoints you will see that it just returns <code>null</code> instead of the list/array it usually gives.</p>
 
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="python">python</a>
           </div>
       </div>
